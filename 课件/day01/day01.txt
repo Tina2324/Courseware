@@ -1,0 +1,149 @@
+版本控制管理工具：
+	集中式版本控制工具：
+		CVS，SVN
+	分布式版本控制工具：
+		git
+
+git的出现，是为了管理linux的内核代码。
+
+Linux的常用指令：
+
+1、pwd , cd , ls
+	pwd : print working directory
+		打印当前工作目录
+	cd : change directory
+		切换工作路径
+		cd 目标文件夹的路径
+		cd ..   回退到上一级目录
+		cd ~   回到用户主目录
+	ls : list
+		显示当前路径下所有文件或目录(不包括隐藏)
+		(linux中，以 . 开始命名的文件或目录为隐藏文件或目录)
+
+2、mkdir
+	make directory 创建文件夹/目录
+	mkdir 文件夹名称
+	mkdir a b  同时创建a和b两个文件夹
+	mkdir a/b  在a目录下创建b目录(父级目录必须存在)
+	mkdir -p a/b 若父级目录不存在，则先创建父级目录
+
+3、touch
+	touch 文件名     创建文件
+	如果文件名不存在，则创建，
+	存在，则修改文件的最后访问时间
+	touch 目录名  修改文件夹的最后访问时间
+
+4、rmdir
+	remove directory
+	rmdir 文件夹名  删除指定名称的文件夹
+		只能删除空文件夹
+
+5、rm
+	remove
+	rm 文件名称  删除指定名称的文件
+	删除非空文件夹：
+		rm -rf 文件夹名称
+
+6、vi
+	view
+	vi 文件名 打开文件，进入编辑界面
+	如果文件不存在，则先创建，然后进入编辑界面
+
+	进入编辑界面后，首先是命令行模式，无法输入数据，需要先按a或者i，进入输入模式
+	数据输入完成，退出输入模式：按Esc回到命令模式
+	按 :  输入wq，保存退出
+		  输入w ，只保存，不退出
+		  输入q ，退出
+		  输入q!，不保存，强制退出
+7、echo
+	回显
+	echo 数据 > 文件名  (覆盖模式)
+	echo 数据 >> 文件名  (追加模式)
+
+8、cat
+	catch
+	cat 文件名  读取显示指定文件的内容
+
+
+git命令的使用：
+	所有的git命令都是以git开头的
+
+1、配置git
+	git config --global user.name "你的用户名"
+	git config --global user.email "邮箱地址"
+2、初始化本地仓库
+	git init
+	git会在当前目录下自动生成一个隐藏的文件夹.git
+
+3、查看仓库的状态
+	git status
+	4种状态：
+		untracked：新建了文件，但是还没有纳入到git的控制中
+		modified：文件被修改，但是还没有执行git add 命令
+		staged：暂存了，但是还没有提交(执行过git add命令，没有执行git commit命令)
+		unmodified：全部提交完成，没有文件有修改
+4、提交
+	git add 文件名
+		将指定名称的文件提交到暂存区
+		git add -A
+		将所有有修改的文件一次性全部提交到暂存区
+	git commit -m "提交的信息"
+		将暂存区的所有内容全部提交
+
+
+练习：
+	1. 在桌面右击打开git bash
+	2. 切换到d盘目录下
+	3. 在d盘下新建文件夹test
+	4. 切换test，将test初始化为本地仓库
+	5. 查看仓库状态
+	6. 新建文件，查看状态
+	7. 提交新建的文件
+	8. 向文件中输入数据，提交
+
+
+5、查看提交信息
+	git log
+
+	git log --pretty=oneline
+
+	git reflog
+6、取消修改
+	1) 取消工作区的修改
+		文件被修改，但是没有执行git add命令
+		git checkout -- 文件名
+	2) 取消暂存区的修改
+		文件被修改，并且执行过git add命令
+		没有执行git commit 命令
+		git reset HEAD 文件名
+		然后取消工作区修改
+	3) 取消master上的修改 
+		无法取消修改
+		但是可以使用版本回退
+		先使用git log 查询所有版本的id
+		确定需要回退到哪个版本后，使用命令：
+		git reset --hard id
+
+
+练习：
+	使用linux命令
+	桌面右击git bash，切换到d盘下
+	在d盘创建文件夹： /d/test/res
+	继续创建文件：/d/test/1.txt
+	切换到res文件夹，将其初始化为本地仓库
+	新建test.txt，输入：新建文件
+	保存提交
+	将test.txt文件内容修改为：测试第二次提交
+	保存提交
+	新建2.txt，提交
+	往2.txt中输入数据 aaaaa
+	保存提交
+	-------------
+	-打开2.txt，删除其中内容，保存关闭
+	将2.txt内容还原为原来的 aaaaa
+	-打开test.txt，删除其中的内容，git add，但不commit
+	还原test.txt内容为原来的  测试第二次提交
+	-将仓库还原为第一次提交后的状态
+
+
+

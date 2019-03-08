@@ -1,0 +1,69 @@
+1. HEAD: 就是存盘点,实现版本控制. 
+         git 将每一次的提交串成一条时间线,这条时间线就是一条分支,默认只有一条分支,master,也叫作主分支
+         而 HEAD 指向的就是当前分支
+2. 分支: 
+   1) 创建分支: git branch 新分支名称 ---> 将当前所在的分支复制一条新的分支出来
+   2) 查看当前所有分支: git branch ---> 其中前面有*表示当前所在分支
+   3) 切换分支: git checkout 分支名 ---> 切换到指定名称的分支上
+            ***其他分支上的修改,不会影响别的分支上的内容
+
+练习: 先提交master分支内容                      git status / git add -A  /  git commit -m "bbb" / git log
+      在master分支上,复制2条新的分支出来         git branch v1.1 / git branch v1.2
+      v1.1   v1.2
+      切换到v1.1,查看内容                       git checkout v1.1
+      切换到v1.2,查看内容                       git checkout v1.2
+      删除v1.2中文件的所有数据,提交保存          git status / git add -A / git commit -m "删除v1.2的内容"
+      再切换回v1.1,查看v1.1中的数据是否还在      git checkout v1.1 / git log
+      切换master,检测master中的数据是否还在      git checkout master
+    
+   4) 删除分支: git branch -d 分支名 ---> 只能删除已经合并过的分支,如果分支中有新的提交没有合并,则删除失败;不能删除当前所在分支.
+               git branch -D 分支名 ---> 强制删除未合并分支
+   5) 分支的合并: git merge 分支名 ---> 将指定名称的分支内容的修改,合并到当前分支中
+      ***在master分支上,使用git merge v1,则是将v1的内容合并到master上去,v1的内容不会变化,master内容发生改变
+***git status , git add 忽略空文件夹的
+
+仓库中,如果新建空文件夹/删除空文件夹,仓库的状态不会发生变化
+
+新建的文件,如果没有被纳入到git 的控制中,切换分支,对其不会有任何影响
+
+合并分支时,必须保证分支已经处于nothing to commit的状态
+合并时,主动合并的分支最新提交点,如果能在被合并的分支中找到,则可以正常自动合并完成;如果找不到,则自动合并失败,需要手动处理
+
+练习: 新建文件夹lianxi ,并初始化为仓库
+      新建文件1.txt,并输入内容"新建文件",提交
+      复制分支v1,查看当前有哪些分支
+      切换到v1分支,将1.txt内容修改为v1分支的修改,提交
+      切换到master分支,查看master分支的内容是否变化
+      将v1的修改合并到master分支,查看提交日志及内容
+      删除v1
+      复制v2分支
+      修改master分支中1.txt内容,提交
+      切换到v2分支,查看v2内容是否与master一致
+      将master内容合并到v2中,再次查看v2与master内容是否一致
+
+GitHub社区
+   1) 注册:点击 Join GitHub
+   2) 创建远程仓库: 点击右上角+,选择new repository
+                   在repository name 中填入远程仓库的名称,点击create repository
+   3) 将本地仓库的内容推送给远程仓库: 先将本地仓库与远程仓库关联 git remote add origin 远程仓库地址(只需要第一次执行,以后就不需要了)
+                                        origin 表示远程仓库地址的别名,方便以后使用
+                                   将本地仓库内容推送给远程仓库 git push -u origin master
+                                        -u 表示第一次推送给远程仓库,第二次以后就不需要添加了
+                                        origin 关联远程仓库时起的别名,指代远程仓库地址,推送到master分支
+      1> 关联远程仓库的两种方式: HTTPS ---> 可以直接关联使用,但是每次push都需要输入用户名和密码
+                               SSH ---> 配置ssh密钥后,可以直接使用,不需要输入用户名和密码
+      2> 配置密钥: 生成一堆密钥 ---> id_rsa(私钥,存放在自己电脑上) / id_rsa.pub(公钥,将其内容配置在GitHub中)
+      3> 在GitHub中配置公钥: 打开id_rsa.pub文件,复制其中内容
+                            在GitHub中点击右上角settings 
+                            ---> SSH And GPGkeys ---> add new SSH key ---> title填入名称,key中粘贴前面复制的内容 ---> add 
+                        ***注意:本机电脑中生成的密钥不要删除
+   4) 从远处仓库下载代码到本机:
+      1> 进入本地仓库,将本地仓库与远程仓库关联
+         使用后面的命令下载远程仓库的内容 ---> git pull 远程仓库地址/别名 master
+         该命令会将远程仓库所有的内容下载下来,包括所有的提交信息
+      2> 使用git clone 命令 ---> git clone远程仓库地址 
+                                不需要进入仓库,该命令会直接将目标远程仓库作为一个文件夹完整的下载下来
+                                下载的文件夹本身就是一个包含了所有提交信息的仓库
+   5) 查看当前仓库有哪些远程关联: git remote
+   6) 删除远程关联: git remote remove origin
+                                   

@@ -1,0 +1,421 @@
+沈以刚
+版本控制管理工具: 
+    集中式版本控制工具--->CVS,SVN
+    分布式版本控制工具--->Git
+Git的出现是为了管理Linux的内核代码
+1.Linux的常用指令: pwd(print working directory)--->打印当前工作目录
+                  cd(change directory) + 目标文件夹的路径 --->切换工作路径
+                        cd .. 表示回退到上一级目录
+                        cd ~  表示回到用户的主目录
+                  ls(list)--- 显示当前路径下所有文件或目录(不包括隐藏,Linux中,以 . 开始命名的文件或目录为隐藏文件或目录)
+                        ls-t(按照时间) / ls-l(形式列表)
+2.mkdir(make directory): 创建文件夹/目录 
+                mkdir + 文件夹名称
+                mkdir a b 同时创建a和b两个文件夹
+                mkdir a/b 在a目录下创建b目录(父级目录必须存在)
+                mkdir -p a/b 若父级目录不存在,则先创建父级目录
+3.touch: 创建一个文件
+    touch 文件名--->创建文件
+          如果文件名不存在,则创建; 存在,则修改文件的最后访问时间
+    touch 目录名--->修改文件夹的最后访问时间
+4.rmdir(remove directory): remdir 文件名--->删除指定名称的文件夹(只能删除空文件夹)
+5.rm(remove): 删除指定名称的文件
+    rm-rf 文件夹名称
+6.vi(view): vi 文件名--->打开文件,进入编辑界面
+                        如果问价不存在,则先创建,然后进入编辑界面
+    操作流程:进入编辑界面后,首先是命令行模式,无法输入数据,需要先按a或者i,进入输入模式.数据输入完成,退出输入模式:按ESC回到命令模式
+            按: , 输入wq , 保存退出
+                  输入w , 只保存,不退出
+                  输入q , 退出
+                  输入q! , 不保存,强制退出
+7.echo: 回显
+        echo 数据 > 文件名 (覆盖模式)
+        echo 数据 >> 文件名 (追加模式)
+8.cat(catch): cat 文件名---> 读取显示指定文件的内容
+9.Git 命令的使用: 所有的git命令都是以git开头的
+  1) 配置Git:  
+        用户名配置: git config --global user.name "你的用户名"
+        邮箱地址配置: git config --global user.email "邮箱地址"
+  2) 初始化本地仓库: git init 
+                    git 会在当前目录下自动生成一个隐藏的文件夹 .git 
+  3) 查看仓库的状态: git status
+        4种状态: untracked--->新建了文件,但是还没有纳入到git的控制中
+                 modified--->文件被修改,但是还没有执行git add 命令
+                 staged--->暂存,但是还没有提交(执行过git add命令,没有执行git commit命令)
+                 unmodified--->全部提交完成,没有文件有修改
+                
+  4) 提交: git add 文件名 --->将指定名称的文件提交到暂存区
+           git add -A --->将所有有修改的文件一次性全部提交到暂存区
+           git commit -m "提交的信息" --->将暂存区的所有内容提交
+
+练习: 1.在桌面右击打开git bash 
+      2.切换到d盘目录下                    cd /d
+      3.在d盘下新建文件夹test              mkdir test  / cd test
+      4.切换test,将test初始化为本地仓库     git init 
+      5.查看仓库状态                       git status
+      6.新建文件,查看状态                  touch 1.txt 
+      7.提交新建的文件                     git add 1.txt
+      8.向文件中输入数据,提交               git commit -m "提交的信息"
+  5) 查看提交信息: git log 
+                  git log---pretty=oneline
+                  git ref 
+  6) 取消修改 :  git checkout 文件名 ---> 取消工作区的修改(文件被修改,但是没有执行git add命令)
+                git reset HEAD 文件名 ---> 取消暂存区的修改(文件被修改,并且执行过git add命令,没有执行git commit命令)
+                                           然后取消工作区修改
+  7) 取消master上的修改:                          
+                git reset --hard id ---> 先使用git log 查询所有版本的ID,确定需要回退到哪个版本后,使用命令(commit后无法取消,但是可以使用版本回退)                      
+
+练习: 使用Linux命令
+      桌面右击git bash
+      切换到d盘目录下
+      在d盘下创建文件 /d/test/res  
+      继续创建文件 /d/test/1.txt 将其初始化为本地仓库
+      新建text.txt 输入:新建文件
+      保存提交
+      将text.txt文件内容修改为:测试第二次提交      
+      保存提交
+      新建2.txt ,提交
+      往2.txt 中输入数据 aaaaa
+      保存提交
+      ----------
+      ---打开2.txt 删除其中内容 ,保存关闭
+         将2.txt内容还原为原来的 aaaaa
+      ---打开test.txt 删除其中的内容,git add ,但不commit
+         还原test.txt 内容为原来的 测试第二次提交
+      ---将仓库还原为第一次提交后的状态
+
+      <!-- Administrator@EKJ8CH45ZSOJSCI MINGW64 ~/Desktop
+      $ cd /d
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d
+      $ touch /d/test
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d
+      $ touch /d/test/res
+      touch: cannot touch '/d/test/res': Not a directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d
+      $ clear
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d
+      $ cd /d
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d
+      $ mkdir /d/test
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d
+      $ mkdir /d/test/res
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d
+      $ mkdir /d/test/1.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d
+      $ cd /d/test/1.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt
+      $ git init
+      Initialized empty Git repository in D:/test/1.txt/.git/
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git status
+      On branch master
+      
+      No commits yet
+      
+      nothing to commit (create/copy files and use "git add" to track)
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ touch test.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m "新建文件"
+      On branch master
+      
+      Initial commit
+      
+      Untracked files:
+              test.txt
+      
+      nothing added to commit but untracked files present
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ echo 新建文件 > test.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git add test.txt
+      warning: LF will be replaced by CRLF in test.txt.
+      The file will have its original line endings in your working directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m "新建文件"
+      [master (root-commit) f96ac9d] 新建文件
+       1 file changed, 1 insertion(+)
+       create mode 100644 test.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git status
+      On branch master
+      nothing to commit, working tree clean
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ echo 测试第二次提交 > test.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git add test.txt
+      warning: LF will be replaced by CRLF in test.txt.
+      The file will have its original line endings in your working directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m "测试第二次提交"
+      [master 79052cc] 测试第二次提交
+       1 file changed, 1 insertion(+), 1 deletion(-)
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ mkdir /d/test/2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ touch 2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ echo aaaaa > 2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git add 2.txt
+      warning: LF will be replaced by CRLF in 2.txt.
+      The file will have its original line endings in your working directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m "aaaaaa"
+      [master c289371] aaaaaa
+       1 file changed, 1 insertion(+)
+       create mode 100644 2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ cd /d/test/2.txt
+      bash: cd: /d/test/2.txt: No such file or directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ echo > 2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git add 2.txt
+      warning: LF will be replaced by CRLF in 2.txt.
+      The file will have its original line endings in your working directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m ""
+      Aborting commit due to empty commit message.
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ cd /d/test/2.txt
+      bash: cd: /d/test/2.txt: No such file or directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git checkout 2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git checkout --2.txt
+      error: unknown option `2.txt'
+      usage: git checkout [<options>] <branch>
+         or: git checkout [<options>] [<branch>] -- <file>...
+      
+          -q, --quiet           suppress progress reporting
+          -b <branch>           create and checkout a new branch
+          -B <branch>           create/reset and checkout a branch
+          -l                    create reflog for new branch
+          --detach              detach HEAD at named commit
+          -t, --track           set upstream info for new branch
+          --orphan <new-branch>
+                                new unparented branch
+          -2, --ours            checkout our version for unmerged files
+          -3, --theirs          checkout their version for unmerged files
+          -f, --force           force checkout (throw away local modifications)
+          -m, --merge           perform a 3-way merge with the new branch
+          --overwrite-ignore    update ignored files (default)
+          --conflict <style>    conflict style (merge or diff3)
+          -p, --patch           select hunks interactively
+          --ignore-skip-worktree-bits
+                                do not limit pathspecs to sparse entries only
+          --ignore-other-worktrees
+                                do not check if another worktree is holding the given ref
+          --recurse-submodules[=<checkout>]
+                                control recursive updating of submodules
+          --progress            force progress reporting
+      
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git checkout --2.txt
+      error: unknown option `2.txt'
+      usage: git checkout [<options>] <branch>
+         or: git checkout [<options>] [<branch>] -- <file>...
+      
+          -q, --quiet           suppress progress reporting
+          -b <branch>           create and checkout a new branch
+          -B <branch>           create/reset and checkout a branch
+          -l                    create reflog for new branch
+          --detach              detach HEAD at named commit
+          -t, --track           set upstream info for new branch
+          --orphan <new-branch>
+                                new unparented branch
+          -2, --ours            checkout our version for unmerged files
+          -3, --theirs          checkout their version for unmerged files
+          -f, --force           force checkout (throw away local modifications)
+          -m, --merge           perform a 3-way merge with the new branch
+          --overwrite-ignore    update ignored files (default)
+          --conflict <style>    conflict style (merge or diff3)
+          -p, --patch           select hunks interactively
+          --ignore-skip-worktree-bits
+                                do not limit pathspecs to sparse entries only
+          --ignore-other-worktrees
+                                do not check if another worktree is holding the given ref
+          --recurse-submodules[=<checkout>]
+                                control recursive updating of submodules
+          --progress            force progress reporting
+      
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ cd /d/test/2.txt
+      bash: cd: /d/test/2.txt: No such file or directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ cd /d/test/1.txt/2.txt
+      bash: cd: /d/test/1.txt/2.txt: Not a directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ cd /d/test/1.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git checkout 2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ echo > 2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git add 2.txt
+      warning: LF will be replaced by CRLF in 2.txt.
+      The file will have its original line endings in your working directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m "aaaaa"
+      [master 5853f3b] aaaaa
+       1 file changed, 1 insertion(+), 1 deletion(-)
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ echo > 2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git add 2.txt
+      warning: LF will be replaced by CRLF in 2.txt.
+      The file will have its original line endings in your working directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m "aaaaa"
+      On branch master
+      nothing to commit, working tree clean
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ echo > 2.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git add 2.txt
+      warning: LF will be replaced by CRLF in 2.txt.
+      The file will have its original line endings in your working directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m "aaaaaa"
+      On branch master
+      nothing to commit, working tree clean
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ cd /d/test/1.txt/test.txt
+      bash: cd: /d/test/1.txt/test.txt: Not a directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ cd /d/test/1.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ echo > test.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git add test.txt
+      warning: LF will be replaced by CRLF in test.txt.
+      The file will have its original line endings in your working directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m ""
+      Aborting commit due to empty commit message.
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git reset HEAD --test.txt
+      error: unknown option `test.txt'
+      usage: git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]
+         or: git reset [-q] [<tree-ish>] [--] <paths>...
+         or: EXPERIMENTAL: git reset [-q] [--stdin [-z]] [<tree-ish>]
+         or: git reset --patch [<tree-ish>] [--] [<paths>...]
+      
+          -q, --quiet           be quiet, only report errors
+          --mixed               reset HEAD and index
+          --soft                reset only HEAD
+          --hard                reset HEAD, index and working tree
+          --merge               reset HEAD, index and working tree
+          --keep                reset HEAD but keep local changes
+          --recurse-submodules[=<reset>]
+                                control recursive updating of submodules
+          -p, --patch           select hunks interactively
+          -N, --intent-to-add   record only the fact that removed paths will be added later
+          -z                    EXPERIMENTAL: paths are separated with NUL character
+          --stdin               EXPERIMENTAL: read paths from <stdin>
+      
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ echo > test.txt
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git add test.txt
+      warning: LF will be replaced by CRLF in test.txt.
+      The file will have its original line endings in your working directory
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git commit -m "测试第二次提交"
+      [master 27f8794] 测试第二次提交
+       1 file changed, 1 insertion(+), 1 deletion(-)
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git log
+      commit 27f8794f711757d62348b8673874202c18314630 (HEAD -> master)
+      Author: tina <1427176817@qq.com>
+      Date:   Mon Mar 4 17:47:05 2019 +0800
+      
+          测试第二次提交
+      
+      commit 5853f3bc5bbde185a81723a58b66c6dff6fdf082
+      Author: tina <1427176817@qq.com>
+      Date:   Mon Mar 4 17:40:42 2019 +0800
+      
+          aaaaa
+      
+      commit c289371bd1adee6ac5997233183216d598fd2ce9
+      Author: tina <1427176817@qq.com>
+      Date:   Mon Mar 4 17:32:09 2019 +0800
+      
+          aaaaaa
+      
+      commit 79052cc51568f78badde65243092c058fa5fa61b
+      Author: tina <1427176817@qq.com>
+      Date:   Mon Mar 4 17:27:55 2019 +0800
+      
+          测试第二次提交
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git reset --hard id 79052
+      fatal: ambiguous argument 'id': unknown revision or path not in the working tree.
+      Use '--' to separate paths from revisions, like this:
+      'git <command> [<revision>...] -- [<file>...]'
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $ git reset --hard 79052cc51568
+      HEAD is now at 79052cc 测试第二次提交
+      
+      Administrator@EKJ8CH45ZSOJSCI MINGW64 /d/test/1.txt (master)
+      $
+       -->

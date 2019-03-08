@@ -1,0 +1,70 @@
+NodeJs
+1. 什么是nodejs？
+  是一个JavaScript的运行环境
+  是一个专注于web服务器高性能优化的专家
+  基于V8引擎诞生
+  能让js脱离浏览器，运行在服务器的开发平台
+  用最小的硬件成本，追求更高的开发，更高的处理性能
+
+2. NodeJs的特点
+  1) 单线程
+  2) 非I/O阻塞
+  3) 事件机制，事件环
+
+3. NodeJs适合做什么？
+  擅长I/O，不擅长计算
+  最擅长的是任务调度
+  比如：
+    用户表单数据的收集
+    考试系统
+    直播间
+    群聊
+
+4. 如何使用
+  安装，检测node -v    npm -v   这两个命令是否可以使用
+  运行一个简单的js文件 01.js
+    打开命令行，输入 node 01.js 查看运行结果
+    注意：window是浏览器的，在这不能使用
+
+  写一个简单的服务器(02_server.js)
+    1) 引入http
+      var http = require('http');
+    2) 创建服务
+      var server = http.createServer(function(req,res){});
+    3) 监听端口
+      server.listen(4000);
+    4) 在服务中编写服务内容
+    启动服务，访问
+    localhost:4000
+
+    结束程序： ctrl+C
+
+  使用nodejs访问一个完整的页面(02_page.js , 02_page.html)
+    nodejs中没有根目录，所以如果要访问某个已经写好的页面，需要通过fs完成
+
+  请求(req)
+    03_req.js
+  响应(res)
+    03_res.js
+
+
+模块
+  nodejs已经封装好的功能，我们可以直接拿来使用
+
+  http
+  fs
+  url
+
+练习：
+  1. 输入localhost:4000，页面显示 这是首页
+      输入localhost:4000/circle，页面显示 红色的圆形
+      输入localhost:4000/square，页面显示 蓝色的方形
+      输入其他地址，页面显示  地址错误
+
+
+  2. 输入localhost:4000 页面显示一个表单
+      用户输入用户名与密码后，后台接收数据
+      如果输入的用户名与密码是  zhangsan  123
+      则显示 欢迎你，zhangsan
+      如果输入的不是zhangsan  123 
+      则显示 用户名或密码错误

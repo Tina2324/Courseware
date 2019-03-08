@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	function randomNub(aArray,len,min,max){
+		if(aArray.length>=len){
+			aArray.sort(function(a,b){
+				return a-b
+			});
+			return aArray;
+		}
+		var nowNub=parseInt(Math.random()*(max-min-1)+(min-1));
+		for(var j=0;j<aArray.length;j++){
+			if(nowNub==aArray[j]){
+				randomNub(aArray,len,min,max);
+				return;
+			}
+			
+		}
+		aArray.push(nowNub);
+		 randomNub(aArray,len,min,max);
+		 return aArray;
+	}
+ var arr=[];
+ randomNub(arr,20,10,100);
+ console.log(arr);
+
+	</script>
+</body>
+</html>

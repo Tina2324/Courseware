@@ -1,0 +1,30 @@
+fs——NodeJs的文件系统模块
+  1. 新建文件/向文件中写入数据(01_write.js): fs.writeFile('文件地址','写入的数据',function(err){});   
+       如果文件不存在，则创建文件，然后将数据写入进去 ; 如果文件存在，则将里面原有的数据覆盖。
+     同步方法：fs.writeFileSync('文件地址','写入的数据')
+  2. 读取文件(01_read.js): 
+        异步方法: fs.readFile('文件地址',function(err,data){});
+        同步方法: fs.readFileSync('文件地址');        // 返回值为读取到的内容 ; 如果读取出错，返回值undefined
+    ***同步方法执行的时间，比异步方法多
+  3. 删除文件(01_delete.js): fs.unlink('文件地址',function(err){});
+  4. 创建文件夹(01_mkdir.js): fs.mkdir('文件夹地址',function(err){});  
+  5. 删除文件夹(01_rmdir.js): fs.rmdir('文件夹地址',function(err){});   //只能删除空文件夹
+  6. 读取文件夹中所有的内容(01_readdir.js): fs.readdir('文件夹地址',function(err,files){});
+  7. 判断一个file是文件还是文件夹(01_stat.js): fs.stat('path',function(err,stats){});
+练习：
+  读取day04文件夹的内容，循环遍历显示day04中的每一个文件，并指出该文件是文件还是文件夹
+    01.js  是一个文件
+    02.js  是一个文件
+    a   是一个文件夹
+    cc  是一个文件夹
+
+练习02：
+  localhost:4000 ===> 表单页面  username,password
+  点击提交，发送请求
+  后台获取用户名与密码
+  创建一个名称为用户名的txt文件，里面保存的是密码
+
+练习03：
+  访问locahost:4000
+  页面显示imgs中的图片
+  图片出不来原因：nodejs没有根目录
